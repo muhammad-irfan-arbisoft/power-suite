@@ -5,11 +5,9 @@ var powersuiteApp = angular.module('powersuite', [
     'ngResource',
     'powersuiteControllers',
     'powersuiteServices',
-    'ui.bootstrap',
     'ui.router',
     'ui.bootstrap',
-    'ui.bootstrap.tpls',
-    'ngGrid'
+    'ui.bootstrap.tpls'
 ]);
 //
 //powersuiteApp.config(['$routeProvider',
@@ -47,7 +45,7 @@ powersuiteApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
 powersuiteApp.config(['$httpProvider', function ($httpProvider) {
     delete $httpProvider.defaults.headers.common["X-Requested-With"];
     $httpProvider.defaults.useXDomain = true;
-    $httpProvider.defaults.withCredentials = true;
+    $httpProvider.defaults.withCredentials = false;
     $httpProvider.defaults.headers.common["Accept"] = "application/json";
     $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
 }

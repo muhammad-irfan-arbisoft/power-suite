@@ -7,31 +7,28 @@ var powersuiteControllers = angular.module('powersuiteControllers', []);
 powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'apiUrl', 'User', 'Dockets',
         function ($scope, $http, $filter, apiUrl, User, Dockets) {
 
-
-
-
-
             $scope.searchDockets = function (dockets) {
                 Dockets.getSchool().then(function(response){
                     $scope.school = response.data;
-                    var orderBy = $filter('orderBy');
-                    $scope.friends = [
-                        { name: 'John',    phone: '555-1212',    age: 10 },
-                        { name: 'Mary',    phone: '555-9876',    age: 19 },
-                        { name: 'Mike',    phone: '555-4321',    age: 21 },
-                        { name: 'Adam',    phone: '555-5678',    age: 35 },
-                        { name: 'Julie',   phone: '555-8765',    age: 29 }
-                    ];
-                    $scope.order = function(predicate, reverse) {
-                        $scope.friends = orderBy($scope.friends, predicate, reverse);
-                    };
-                    $scope.order('-age',false);
+
                     console.log($scope.school);
                 });
                 Dockets.getDockets().then(function(response){
                     $scope.dockets = response.data;
                     console.log($scope.dockets);
                 });
+                var orderBy = $filter('orderBy');
+                $scope.friends = [
+                    { name: 'John',    phone: '555-1212',    age: 10 },
+                    { name: 'Mary',    phone: '555-9876',    age: 19 },
+                    { name: 'Mike',    phone: '555-4321',    age: 21 },
+                    { name: 'Adam',    phone: '555-5678',    age: 35 },
+                    { name: 'Julie',   phone: '555-8765',    age: 29 }
+                ];
+                $scope.order = function(predicate, reverse) {
+                    $scope.friends = orderBy($scope.friends, predicate, reverse);
+                };
+                $scope.order('-age',false);
                 //$scope.dockets = Dockets.getDockets;
                 //$scope.school = $http({method: 'GET', url: apiUrl + '/schools/1', params: {access_token: User.access_token, email: User.email}});
                 //$scope.dockets = {

@@ -6,7 +6,7 @@ var powersuiteService = angular.module('powersuiteServices', ['ngResource', 'ngR
 
 powersuiteService.constant('url', 'http://localhost:3000/');
 powersuiteService.constant('apiUrl', 'http://localhost:3000/api/v1');
-powersuiteService.constant('docketsUrl', 'http://pucscrape.appspot.com/dockets');
+powersuiteService.constant('docketsUrl', 'http://aeedocketapi-staging.appspot.com/dockets');
 
 powersuiteService.factory('User', function () {
     var user = {
