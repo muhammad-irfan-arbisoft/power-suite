@@ -6,11 +6,23 @@ var powersuiteControllers = angular.module('powersuiteControllers', []);
 
 powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'apiUrl', 'User', 'Dockets',
         function ($scope, $http, $filter, apiUrl, User, Dockets) {
+            console.log($scope);
+            Date.prototype.getDateAsString = function (date) {
+                var yyyy = date.getFullYear().toString();
+                var mm = (date.getMonth() + 1).toString(); // getMonth() is zero-based
+                var dd = date.getDate().toString();
+                return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]); // padding
+            };
+            // var d = new Date();
+            //d.getDateAsString();
+             //results: 2015-04-20
+
+            $scope.dockets = {to_date: null, from_date: null, states: [], keyword: null, scope: null};
 
             $scope.availableStates = ['Alaska','Alabama','Arizona','Arkansas','California','Colorado','Connecticut','Delaware', 'District of Columbia','Florida', 'Georgia','Hawaii','Idaho', 'Illinois', 'Indiana',
             'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine'];
 
-            $scope.multipleStates = {};
+            $scope.states = {};
             //set priority by default to -
             $scope.priorities = [
                 {name: 'Low'},
@@ -21,14 +33,14 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
             $scope.priority = $scope.priorities[2];
 
             //get dockets with search parameters
-            $scope.searchDockets = function (dockets) {
-
-                Dockets.getSchool().then(function (response) {
-                    $scope.school = response.data;
-                    console.log($scope.school);
-                });
-
-                Dockets.getDockets().then(function (response) {
+            $scope.searchDockets = function () {
+                //Dockets.getSchool($scope.dockets).then(function (response) {
+                //    $scope.school = response.data;
+                //    console.log($scope.school);
+                //});
+                $scope.dockets.from_date = $scope.dockets.from_date.getDateAsString($scope.dockets.from_date);
+                $scope.dockets.to_date = $scope.dockets.to_date.getDateAsString($scope.dockets.to_date);
+                Dockets.getDockets($scope.dockets).then(function (response) {
                     //sorting on dockets values
                     $scope.dockets = response.data.dockets;
                     var orderBy = $filter('orderBy');
@@ -39,6 +51,7 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
                 });
 
                 //sorting on name, phone and age
+                var orderBy = $filter('orderBy');
                 $scope.friends = [
                     {name: 'John', phone: '555-1212', age: 10},
                     {name: 'Mary', phone: '555-9876', age: 19},
@@ -102,7 +115,7 @@ powersuiteControllers.controller('DatePickerCtrl', function ($scope) {
         startingDay: 1
     };
 
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate', 'yyyy-MM-dd'];
+    $scope.format = $scope.formats[4];
 });
 
