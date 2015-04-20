@@ -7,7 +7,9 @@ var powersuiteApp = angular.module('powersuite', [
     'powersuiteServices',
     'ui.router',
     'ui.bootstrap',
-    'ui.bootstrap.tpls'
+    'ui.bootstrap.tpls',
+    'ui.select',
+    'ngSanitize'
 ]);
 //
 //powersuiteApp.config(['$routeProvider',
@@ -50,3 +52,9 @@ powersuiteApp.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
 }
 ]);
+
+powersuiteApp.config(function(uiSelectConfig) {
+    uiSelectConfig.theme = 'bootstrap';
+    uiSelectConfig.resetSearchInput = true;
+    uiSelectConfig.appendToBody = true;
+});

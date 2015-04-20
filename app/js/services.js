@@ -19,7 +19,7 @@ powersuiteService.factory('User', function () {
 powersuiteService.service('Dockets', function ($http, apiUrl, docketsUrl, User) {
 
     this.getDockets = function(){
-        return $http.get(docketsUrl + '?' , {params: {states:'MA',api_key: 'd4dc4045dd431d43b317190a41b982aa'}})
+        return $http.get(docketsUrl + '?' , {params: {states:'MA', api_key: 'd4dc4045dd431d43b317190a41b982aa'}})
             .success(function(data, status, headers, config){
                 return data;
             }).error(function(data, status, headers, config){

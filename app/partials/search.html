@@ -1,10 +1,17 @@
+
+
 <p xmlns="http://www.w3.org/1999/html">this is search partial</p>
 
 <div ng-controller="SearchCtrl">
     <form novalidate class="form-inline">
         <div class="form-group">
-            <label for="states">States</label>
-            <input type="text" ng-model="dockets.state" class="form-control" id="states" placeholder="states">
+            <label>States</label>
+            <ui-select  multiple ng-model="multipleStates.states" theme="bootstrap" ng-disabled="disabled">
+                <ui-select-match placeholder="Select States...">{{$item}}</ui-select-match>
+                <ui-select-choices repeat="state in availableStates | filter:$select.search">
+                    {{state}}
+                </ui-select-choices>
+            </ui-select>
         </div>
         <div class="form-group">
             <label for="keyword">Keyword</label>
@@ -33,7 +40,7 @@
             </div>
         </div>
         <button type="submit" ng-click="searchDockets(dockets)" class="btn btn-default">Search</button>
-        <input type="button" class="btn btn-default" ng-click="reset()" value="Reset"/>
+        <input type="button" class="btn btn-default" ng-click="reset()" value="Clear"/>
     </form>
 
     <br/>
@@ -43,13 +50,41 @@
             <tr>
                 <th><a href="" ng-click="reverse=!reverse;order('name', reverse)">Name</a>
                 <th><a href="" ng-click="reverse=!reverse;order('phone', reverse)">Phone Number</a></th>
-                <th><a href="" ng-click="reverse=!reverse;order('age',reverse)">Age</a></th>
+                <th><a href="" ng-click="reverse=!reverse;order('age', reverse)">Age</a></th>
             </tr>
-            <div class="gridStyle" ng-grid="gridOptions">
+            <div>
                 <tr ng-repeat="friend in friends">
                     <td>{{friend.name}}</td>
                     <td>{{friend.phone}}</td>
                     <td>{{friend.age}}</td>
+                </tr>
+            </div>
+        </table>
+
+        <table class=" table table-bordered table-striped table-responsive" ng-if="dockets">
+            <tr>
+                <th><a href="" ng-click="reverse=!reverse;order('state_id', reverse)">Docket Number</a>
+                <th><a href="" ng-click="reverse=!reverse;order('title', reverse)">Title</a></th>
+                <th><a href="" ng-click="reverse=!reverse;order('state', reverse)">State</a></th>
+                <th><a href="" ng-click="reverse=!reverse;order('filing_count', reverse)">Filing</a></th>
+                <th><a href="" ng-click="reverse=!reverse;order('filed_on', reverse)">Date Opened</a></th>
+                <th><a href="" ng-click="reverse=!reverse;order('latest_filing_updated_on', reverse)">Latest Filing</a>
+                </th>
+                <th><a href="" ng-click="reverse=!reverse;order('status', reverse)">Status</a></th>
+                <th><a href="" ng-click="reverse=!reverse;order('priority', reverse)">Priority</a></th>
+            </tr>
+            <div>
+                <tr ng-repeat="docket in dockets">
+                    <td>{{docket.state_id}}</td>
+                    <td>{{docket.title}}</td>
+                    <td>{{docket.state}}</td>
+                    <td>{{docket.filing_count}}</td>
+                    <td>{{docket.filed_on}}</td>
+                    <td>{{docket.latest_filing_updated_on}}</td>
+                    <td>{{docket.status}}</td>
+                    <td>
+                        <select ng-model="priority" ng-options="priority.name for priority in priorities"></select>
+                    </td>
                 </tr>
             </div>
         </table>

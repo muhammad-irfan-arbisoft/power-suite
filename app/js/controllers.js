@@ -7,28 +7,49 @@ var powersuiteControllers = angular.module('powersuiteControllers', []);
 powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'apiUrl', 'User', 'Dockets',
         function ($scope, $http, $filter, apiUrl, User, Dockets) {
 
-            $scope.searchDockets = function (dockets) {
-                Dockets.getSchool().then(function(response){
-                    $scope.school = response.data;
+            $scope.availableStates = ['Alaska','Alabama','Arizona','Arkansas','California','Colorado','Connecticut','Delaware', 'District of Columbia','Florida', 'Georgia','Hawaii','Idaho', 'Illinois', 'Indiana',
+            'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine'];
 
+            $scope.multipleStates = {};
+            //set priority by default to -
+            $scope.priorities = [
+                {name: 'Low'},
+                {name: 'High'},
+                {name: ' - '}
+            ];
+            //set default priority to -
+            $scope.priority = $scope.priorities[2];
+
+            //get dockets with search parameters
+            $scope.searchDockets = function (dockets) {
+
+                Dockets.getSchool().then(function (response) {
+                    $scope.school = response.data;
                     console.log($scope.school);
                 });
-                Dockets.getDockets().then(function(response){
-                    $scope.dockets = response.data;
+
+                Dockets.getDockets().then(function (response) {
+                    //sorting on dockets values
+                    $scope.dockets = response.data.dockets;
+                    var orderBy = $filter('orderBy');
+                    $scope.order = function (predicate, reverse) {
+                        $scope.dockets = orderBy($scope.dockets, predicate, reverse);
+                    };
                     console.log($scope.dockets);
                 });
-                var orderBy = $filter('orderBy');
+
+                //sorting on name, phone and age
                 $scope.friends = [
-                    { name: 'John',    phone: '555-1212',    age: 10 },
-                    { name: 'Mary',    phone: '555-9876',    age: 19 },
-                    { name: 'Mike',    phone: '555-4321',    age: 21 },
-                    { name: 'Adam',    phone: '555-5678',    age: 35 },
-                    { name: 'Julie',   phone: '555-8765',    age: 29 }
+                    {name: 'John', phone: '555-1212', age: 10},
+                    {name: 'Mary', phone: '555-9876', age: 19},
+                    {name: 'Mike', phone: '555-4321', age: 21},
+                    {name: 'Adam', phone: '555-5678', age: 35},
+                    {name: 'Julie', phone: '555-8765', age: 29}
                 ];
-                $scope.order = function(predicate, reverse) {
+                $scope.order = function (predicate, reverse) {
                     $scope.friends = orderBy($scope.friends, predicate, reverse);
                 };
-                $scope.order('-age',false);
+                $scope.order('-age', false);
                 //$scope.dockets = Dockets.getDockets;
                 //$scope.school = $http({method: 'GET', url: apiUrl + '/schools/1', params: {access_token: User.access_token, email: User.email}});
                 //$scope.dockets = {
