@@ -5,6 +5,7 @@ var powersuiteApp = angular.module('powersuite', [
     'ngResource',
     'powersuiteControllers',
     'powersuiteServices',
+    'powersuiteFilters',
     'ui.router',
     'ui.bootstrap',
     'ui.bootstrap.tpls',

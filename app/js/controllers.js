@@ -6,23 +6,63 @@ var powersuiteControllers = angular.module('powersuiteControllers', []);
 
 powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'apiUrl', 'User', 'Dockets',
         function ($scope, $http, $filter, apiUrl, User, Dockets) {
-            console.log($scope);
-            Date.prototype.getDateAsString = function (date) {
-                var yyyy = date.getFullYear().toString();
-                var mm = (date.getMonth() + 1).toString(); // getMonth() is zero-based
-                var dd = date.getDate().toString();
-                return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]); // padding
-            };
+
             // var d = new Date();
             //d.getDateAsString();
-             //results: 2015-04-20
+            //results: 2015-04-20
 
-            $scope.dockets = {to_date: null, from_date: null, states: [], keyword: null, scope: null};
+            Date.prototype.getDateAsString = function () {
+                var yyyy = this.getFullYear().toString();
+                var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
+                var dd = this.getDate().toString();
+                return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]); // padding
+            };
 
-            $scope.availableStates = ['Alaska','Alabama','Arizona','Arkansas','California','Colorado','Connecticut','Delaware', 'District of Columbia','Florida', 'Georgia','Hawaii','Idaho', 'Illinois', 'Indiana',
-            'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine'];
+            $scope.dockets = {
+                to_date: null,
+                from_date: null,
+                states: [{name: null, code:null}],
+                keyword: null,
+                search_scope: [{name: null, code: null}]
+            };
 
-            $scope.states = {};
+            $scope.availableStates = [
+                {name: 'Alaska', code: 'AL'},
+                {name: 'Alabama', code: ''},
+                {name: 'Arizona', code: ''},
+                {name: 'Arkansas', code: ''},
+                {name: 'California', code: ''},
+                {name: 'Colorado', code: ''},
+                {name: 'Connecticut', code: ''},
+                {name: 'Delaware', code: ''},
+                {name: 'District of Columbia', code: ''},
+                {name: 'Florida', code: ''},
+                {name: 'Georgia', code: ''},
+                {name: 'Hawaii', code: ''},
+                {name: 'Idaho', code: ''},
+                {name: 'Illinois', code: ''},
+                {name: 'Indiana', code: ''},
+                {name: 'Iowa', code: ''},
+                {name: 'Kansas', code: ''},
+                {name: 'Kentucky', code: ''},
+                {name: 'Louisiana', code: ''},
+                {name: 'Maine', code: ''}
+            ];
+            $scope.friends = [
+                {name: 'John', phone: '555-1212', age: 10},
+                {name: 'Mary', phone: '555-9876', age: 19},
+                {name: 'Mike', phone: '555-4321', age: 21},
+                {name: 'Adam', phone: '555-5678', age: 35},
+                {name: 'Julie', phone: '555-8765', age: 29}
+            ];
+
+            $scope.availableScopes = [
+                {name: 'All Content', code: 'all'},
+                {name: 'Metadata Only', code: 'meta-data'},
+                {name: 'Docket Number', code: 'state-id'},
+                {name: 'Major Parties', code: 'major-party'}
+            ];
+
             //set priority by default to -
             $scope.priorities = [
                 {name: 'Low'},
@@ -31,6 +71,7 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
             ];
             //set default priority to -
             $scope.priority = $scope.priorities[2];
+            $scope.dockets.search_scope = $scope.availableScopes[0];
 
             //get dockets with search parameters
             $scope.searchDockets = function () {
@@ -38,8 +79,14 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
                 //    $scope.school = response.data;
                 //    console.log($scope.school);
                 //});
-                $scope.dockets.from_date = $scope.dockets.from_date.getDateAsString($scope.dockets.from_date);
-                $scope.dockets.to_date = $scope.dockets.to_date.getDateAsString($scope.dockets.to_date);
+                var from_date = $scope.dockets.from_date;
+                var to_date = $scope.dockets.to_date;
+
+                if (from_date && to_date) {
+                    $scope.dockets.from_date = from_date.getDateAsString();
+                    $scope.dockets.to_date = to_date.getDateAsString();
+                }
+
                 Dockets.getDockets($scope.dockets).then(function (response) {
                     //sorting on dockets values
                     $scope.dockets = response.data.dockets;
@@ -52,13 +99,7 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
 
                 //sorting on name, phone and age
                 var orderBy = $filter('orderBy');
-                $scope.friends = [
-                    {name: 'John', phone: '555-1212', age: 10},
-                    {name: 'Mary', phone: '555-9876', age: 19},
-                    {name: 'Mike', phone: '555-4321', age: 21},
-                    {name: 'Adam', phone: '555-5678', age: 35},
-                    {name: 'Julie', phone: '555-8765', age: 29}
-                ];
+
                 $scope.order = function (predicate, reverse) {
                     $scope.friends = orderBy($scope.friends, predicate, reverse);
                 };

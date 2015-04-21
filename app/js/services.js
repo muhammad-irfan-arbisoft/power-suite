@@ -19,7 +19,7 @@ powersuiteService.factory('User', function () {
 powersuiteService.service('Dockets', function ($http, apiUrl, docketsUrl, User) {
 
     this.getDockets = function(dockets){
-        return $http.get(docketsUrl + '?' , {params: {api_key: 'd4dc4045dd431d43b317190a41b982aa', states: 'DC', direction:'desc', q: dockets.keyword, filed_on_after: dockets.to_date, filed_on_before: dockets.from_date}})
+        return $http.get(docketsUrl + '?' , {params: {api_key: 'd4dc4045dd431d43b317190a41b982aa', states: dockets.states.code,keyword_scope: dockets.search_scope.code, direction:'desc', q: dockets.keyword, filed_on_after: dockets.to_date, filed_on_before: dockets.from_date}})
             .success(function(data, status, headers, config){
                 return data;
             }).error(function(data, status, headers, config){
