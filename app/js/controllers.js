@@ -7,10 +7,6 @@ var powersuiteControllers = angular.module('powersuiteControllers', []);
 powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'apiUrl', 'User', 'Dockets',
         function ($scope, $http, $filter, apiUrl, User, Dockets) {
 
-            // var d = new Date();
-            //d.getDateAsString();
-            //results: 2015-04-20
-
             Date.prototype.getDateAsString = function () {
                 var yyyy = this.getFullYear().toString();
                 var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
@@ -48,13 +44,6 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
                 {name: 'Louisiana', code: ''},
                 {name: 'Maine', code: ''}
             ];
-            $scope.friends = [
-                {name: 'John', phone: '555-1212', age: 10},
-                {name: 'Mary', phone: '555-9876', age: 19},
-                {name: 'Mike', phone: '555-4321', age: 21},
-                {name: 'Adam', phone: '555-5678', age: 35},
-                {name: 'Julie', phone: '555-8765', age: 29}
-            ];
 
             $scope.availableScopes = [
                 {name: 'All Content', code: 'all'},
@@ -75,10 +64,6 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
 
             //get dockets with search parameters
             $scope.searchDockets = function () {
-                //Dockets.getSchool($scope.dockets).then(function (response) {
-                //    $scope.school = response.data;
-                //    console.log($scope.school);
-                //});
                 var from_date = $scope.dockets.from_date;
                 var to_date = $scope.dockets.to_date;
 
@@ -97,21 +82,8 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
                     console.log($scope.dockets);
                 });
 
-                //sorting on name, phone and age
-                var orderBy = $filter('orderBy');
-
-                $scope.order = function (predicate, reverse) {
-                    $scope.friends = orderBy($scope.friends, predicate, reverse);
-                };
-                $scope.order('-age', false);
                 //$scope.dockets = Dockets.getDockets;
                 //$scope.school = $http({method: 'GET', url: apiUrl + '/schools/1', params: {access_token: User.access_token, email: User.email}});
-                //$scope.dockets = {
-                //    state: 10,
-                //    word: "SEARCH",
-                //    to_date: new Date(2015, 3, 12),
-                //    from_date: new Date(2015, 3, 15)
-                //};
             }
         }]
 );
