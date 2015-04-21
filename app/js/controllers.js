@@ -11,38 +11,38 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
                 var yyyy = this.getFullYear().toString();
                 var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
                 var dd = this.getDate().toString();
-                return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]); // padding
+                return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]);
             };
-
+            $scope.results = null;
             $scope.dockets = {
                 to_date: null,
                 from_date: null,
-                states: [{name: null, code:null}],
+                states: [],
                 keyword: null,
                 search_scope: [{name: null, code: null}]
             };
 
             $scope.availableStates = [
                 {name: 'Alaska', code: 'AL'},
-                {name: 'Alabama', code: ''},
-                {name: 'Arizona', code: ''},
-                {name: 'Arkansas', code: ''},
-                {name: 'California', code: ''},
-                {name: 'Colorado', code: ''},
-                {name: 'Connecticut', code: ''},
-                {name: 'Delaware', code: ''},
-                {name: 'District of Columbia', code: ''},
-                {name: 'Florida', code: ''},
-                {name: 'Georgia', code: ''},
-                {name: 'Hawaii', code: ''},
-                {name: 'Idaho', code: ''},
-                {name: 'Illinois', code: ''},
-                {name: 'Indiana', code: ''},
-                {name: 'Iowa', code: ''},
-                {name: 'Kansas', code: ''},
-                {name: 'Kentucky', code: ''},
-                {name: 'Louisiana', code: ''},
-                {name: 'Maine', code: ''}
+                {name: 'Alabama', code: null},
+                {name: 'Arizona', code: null},
+                {name: 'Arkansas', code: null},
+                {name: 'California', code: null},
+                {name: 'Colorado', code: null},
+                {name: 'Connecticut', code: null},
+                {name: 'Delaware', code: null},
+                {name: 'District of Columbia', code: null},
+                {name: 'Florida', code: null},
+                {name: 'Georgia', code: null},
+                {name: 'Hawaii', code: null},
+                {name: 'Idaho', code: null},
+                {name: 'Illinois', code: null},
+                {name: 'Indiana', code: null},
+                {name: 'Iowa', code: null},
+                {name: 'Kansas', code: null},
+                {name: 'Kentucky', code: null},
+                {name: 'Louisiana', code: null},
+                {name: 'Maine', code: null}
             ];
 
             $scope.availableScopes = [
@@ -64,23 +64,31 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
 
             //get dockets with search parameters
             $scope.searchDockets = function () {
-                var from_date = $scope.dockets.from_date;
-                var to_date = $scope.dockets.to_date;
 
-                if (from_date && to_date) {
-                    $scope.dockets.from_date = from_date.getDateAsString();
-                    $scope.dockets.to_date = to_date.getDateAsString();
+                if ($scope.dockets.from_date && $scope.dockets.to_date) {
+                    $scope.dockets.from_date = $scope.dockets.from_date.getDateAsString();
+                    $scope.dockets.to_date = $scope.dockets.to_date.getDateAsString();
                 }
 
                 Dockets.getDockets($scope.dockets).then(function (response) {
                     //sorting on dockets values
-                    $scope.dockets = response.data.dockets;
+                    $scope.results = response.data.dockets;
                     var orderBy = $filter('orderBy');
                     $scope.order = function (predicate, reverse) {
-                        $scope.dockets = orderBy($scope.dockets, predicate, reverse);
+                        $scope.results = orderBy($scope.results, predicate, reverse);
                     };
-                    console.log($scope.dockets);
+                    console.log($scope.results);
                 });
+
+                $scope.clear = function(){
+                    $scope.dockets.from_date = null;
+                    $scope.dockets.to_date = null;
+                    $scope.dockets.keyword = null;
+                    $scope.dockets.states = [];
+                    $scope.dockets.search_scope = $scope.availableScopes[0];
+                    $scope.priority = null;
+                    $scope.results = null;
+                };
 
                 //$scope.dockets = Dockets.getDockets;
                 //$scope.school = $http({method: 'GET', url: apiUrl + '/schools/1', params: {access_token: User.access_token, email: User.email}});
