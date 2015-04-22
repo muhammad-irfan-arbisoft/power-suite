@@ -6,15 +6,20 @@ api_version: 1
 
 handlers:
 
-- url: /js
-  static_files: app/js
-  upload: /js
+- url: /js/.*
+  static_files: app/js/.*\.js
+  upload: app/js/.*\.js
   mime_type: text/javascript; charset=utf-8
 
-- url: /css
-  static_files: static/css
-  upload: /css
+- url: /css/.*
+  static_files: app/css
+  upload: app/css/.*\.css
   mime_type: text/css; charset=utf-8
+
+- url: /components/.*
+  static_files: app/components
+  upload: app/components/.*\.js
+  mime_type: text/javascript; charset=utf-8
 
 - url: /bower_components
   mime_type: text/javascript
