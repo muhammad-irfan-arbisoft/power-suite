@@ -23,26 +23,56 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
             };
 
             $scope.availableStates = [
-                {name: 'Alaska', code: 'AL'},
-                {name: 'Alabama', code: null},
-                {name: 'Arizona', code: null},
-                {name: 'Arkansas', code: null},
-                {name: 'California', code: null},
-                {name: 'Colorado', code: null},
-                {name: 'Connecticut', code: null},
-                {name: 'Delaware', code: null},
-                {name: 'District of Columbia', code: null},
-                {name: 'Florida', code: null},
-                {name: 'Georgia', code: null},
-                {name: 'Hawaii', code: null},
-                {name: 'Idaho', code: null},
-                {name: 'Illinois', code: null},
-                {name: 'Indiana', code: null},
-                {name: 'Iowa', code: null},
-                {name: 'Kansas', code: null},
-                {name: 'Kentucky', code: null},
-                {name: 'Louisiana', code: null},
-                {name: 'Maine', code: null}
+                {name: 'Alabama', code: 'AL'},
+                {name: 'Alaska', code: 'AK'},
+                {name: 'Arizona', code: 'AZ'},
+                {name: 'Arkansas', code: 'AR'},
+                {name: 'California', code: 'CA'},
+                {name: 'Colorado', code: 'CO'},
+                {name: 'Connecticut', code: 'CT'},
+                {name: 'Delaware', code: 'DE'},
+                {name: 'Florida', code: 'FL'},
+                {name: 'Georgia', code: 'GA'},
+                {name: 'Hawaii', code: 'HI'},
+                {name: 'Idaho', code: 'ID'},
+                {name: 'Illinois', code: 'IL'},
+                {name: 'Indiana', code: 'IN'},
+                {name: 'Iowa', code: 'IA'},
+                {name: 'Kansas', code: 'KS'},
+                {name: 'Kentucky', code: 'KY'},
+                {name: 'Louisiana', code: 'LA'},
+                {name: 'Maine', code: 'ME'},
+                {name: 'Maryland', code: 'MD'},
+                {name: 'Massachusetts', code: 'MA'},
+                {name: 'Michigan', code: 'MI'},
+                {name: 'Minnesota', code: 'MN'},
+                {name: 'Mississippi', code: 'MS'},
+                {name: 'Missouri', code: 'MO'},
+                {name: 'Montana', code: 'MT'},
+                {name: 'Nebraska', code: 'NE'},
+                {name: 'Nevada', code: 'NV'},
+                {name: 'New Hampshire', code: 'NH'},
+                {name: 'New Jersey', code: 'NJ'},
+                {name: 'New Mexico', code: 'NM'},
+                {name: 'New York', code: 'NY'},
+                {name: 'North Carolina', code: 'NC'},
+                {name: 'North Dakota', code: 'ND'},
+                {name: 'Ohio', code: 'OH'},
+                {name: 'Oklahoma', code: 'OK'},
+                {name: 'Oregon', code: 'OR'},
+                {name: 'Pennsylvania', code: 'PA'},
+                {name: 'Rhode Island', code: 'RI'},
+                {name: 'South Carolina', code: 'SC'},
+                {name: 'South Dakota', code: 'SD'},
+                {name: 'Tennessee', code: 'TN'},
+                {name: 'Texas', code: 'TX'},
+                {name: 'Utah', code: 'UT'},
+                {name: 'Vermont', code: 'VT'},
+                {name: 'Virginia', code: 'VA'},
+                {name: 'Washington', code: 'WA'},
+                {name: 'West Virginia', code: 'WV'},
+                {name: 'Wisconsin', code: 'WI'},
+                {name: 'Wyoming', code: 'WY'}
             ];
 
             $scope.availableScopes = [
@@ -80,7 +110,7 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
                     console.log($scope.results);
                 });
 
-                $scope.clear = function(){
+                $scope.clear = function () {
                     $scope.dockets.from_date = null;
                     $scope.dockets.to_date = null;
                     $scope.dockets.keyword = null;
