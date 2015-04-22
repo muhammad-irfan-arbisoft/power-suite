@@ -10,7 +10,8 @@ var powersuiteApp = angular.module('powersuite', [
     'ui.bootstrap',
     'ui.bootstrap.tpls',
     'ui.select',
-    'ngSanitize'
+    'ngSanitize',
+    'angular-underscore'
 ]);
 //
 //powersuiteApp.config(['$routeProvider',
