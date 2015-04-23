@@ -96,8 +96,12 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
             $scope.searchDockets = function () {
 
                 if ($scope.dockets.from_date && $scope.dockets.to_date) {
-                    $scope.dockets.from_date = $scope.dockets.from_date.getDateAsString();
-                    $scope.dockets.to_date = $scope.dockets.to_date.getDateAsString();
+                    if (angular.isDate($scope.dockets.from_date)){
+                        $scope.dockets.from_date = $scope.dockets.from_date.getDateAsString();
+                    }
+                    if (angular.isDate($scope.dockets.to_date)){
+                        $scope.dockets.to_date = $scope.dockets.to_date.getDateAsString();
+                    }
                 }
 
                 Dockets.getDockets($scope.dockets).then(function (response) {

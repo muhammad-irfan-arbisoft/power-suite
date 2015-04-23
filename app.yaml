@@ -6,34 +6,33 @@ api_version: 1
 
 handlers:
 
-- url: /js/.*
-  static_files: app/js/.*\.js
-  upload: app/js/.*\.js
-  mime_type: text/javascript; charset=utf-8
+- url: /app/css
+  static_dir: app/css
+  mime_type: text/css
 
-- url: /css/.*
-  static_files: app/css
-  upload: app/css/.*\.css
-  mime_type: text/css; charset=utf-8
-
-- url: /components/.*
-  static_files: app/components
-  upload: app/components/.*\.js
-  mime_type: text/javascript; charset=utf-8
-
-- url: /bower_components
+- url: /app/js
+  static_dir: app/js
   mime_type: text/javascript
-  static_files: static/bower_components/
-  upload: app/bower_components/.*?/.*
 
-- url: (.*)/
+- url: /app/components
+  static_dir: app/components
+#  mime_type: text/javascript
+
+- url: /app/bower_components
+  static_dir: app/bower_components
+#  mime_type: text/javascript
+
+- url: /app/partials
+  static_dir: app/partials
+  mime_type: text/html
+
+- url: (.*)/.*
   static_files: app/index.html
   upload: app
-
-- url: (.*)
-  static_files: app
-  upload: app
-
+#
+#- url: (.*)
+#  static_files: app
+#  upload: app
 
 
 

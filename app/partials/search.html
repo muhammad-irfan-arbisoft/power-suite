@@ -2,7 +2,7 @@
     <form novalidate class="form-inline">
         <div class="form-group">
             <label>States</label>
-            <ui-select multiple ng-model="dockets.states" theme="bootstrap" ng-disabled="disabled">
+            <ui-select style="min-width: 100px" multiple ng-model="dockets.states" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match placeholder="Select States...">{{$item.name}}</ui-select-match>
                 <ui-select-choices repeat="state in availableStates | filter:$select.search">
                     {{state.name}}
