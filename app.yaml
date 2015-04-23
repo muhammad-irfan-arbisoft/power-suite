@@ -1,4 +1,4 @@
-application: sturdy-tuner-92307
+application: power-suite
 version: 1
 runtime: python27
 threadsafe: true
