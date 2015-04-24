@@ -104,11 +104,13 @@
 
                         <tr ng-repeat="filing in docketFilings">
                             <td>{{filing.filed_on}}</td>
+                            <td> {{filing.description}}</td>
                             <td> -</td>
-                            <td>{{filing.types}}</td>
+                            <td>-</td>
                             <td>{{filing.documents.length}}</td>
-                            <td>{{filing.documents.page_count}}</td>
-                            <td>{{filing.documents.download_url}}</td>
+                            <td>{{filing.total_pages}}</td>
+                            <td>{{filing.documents[0].download_url}}</td>
+                            <td><a class="btn btn-mini" href="" ng-click="pdfView(filing.documents[0].download_url)"><i class="glyphicon-eye-open"></i></a></td>
 
                         </tr>
                     </table>

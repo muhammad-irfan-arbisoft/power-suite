@@ -11,7 +11,9 @@ var powersuiteApp = angular.module('powersuite', [
     'ui.bootstrap.tpls',
     'ui.select',
     'ngSanitize',
-    'angular-underscore'
+    'angular-underscore',
+    'pdf',
+    'ngDialog'
 ]);
 //
 //powersuiteApp.config(['$routeProvider',

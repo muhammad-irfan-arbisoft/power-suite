@@ -28,7 +28,7 @@ powersuiteService.service('Dockets', function ($http, apiUrl, docketsUrl, User) 
             });
     };
     this.getDocketFilings = function(docket){
-        return $http.get(docketsUrl + '/' + docket.id, {params: {api_key: 'd4dc4045dd431d43b317190a41b982aa'}})
+        return $http.get(docketsUrl + '/' + docket.id.toString(), {params: {api_key: 'd4dc4045dd431d43b317190a41b982aa'}})
             .success(function(data, status, headers, config){
                 return data;
             }).error(function(data, status, headers, config){

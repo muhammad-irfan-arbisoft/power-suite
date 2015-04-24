@@ -4,14 +4,18 @@
 
 var powersuiteControllers = angular.module('powersuiteControllers', []);
 
-powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'apiUrl', 'User', 'Dockets',
-        function ($scope, $http, $filter, apiUrl, User, Dockets) {
+powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'apiUrl', 'User', 'Dockets', 'ngDialog',
+        function ($scope, $http, $filter, apiUrl, User, Dockets, ngDialog) {
             $scope.moduleState = 'list';
 
             $scope.showDetail = function(docket){
                 $scope.selectedDocket = docket;
                 $scope.moduleState = 'detail';
-                $scope.docketFilings = Dockets.getDocketFilings(docket);
+                Dockets.getDocketFilings(docket).then(function (response) {
+                    $scope.docketFilings = response.data.dockets[0].filings;
+                    $scope.docket = response.data.dockets[0];
+                    console.log($scope.docketFilings);
+                });
             };
 
             Date.prototype.getDateAsString = function () {
@@ -29,6 +33,12 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
             //set default priority to -
             $scope.priority = $scope.availablePriorities[2];
             $scope.dockets.search_scope = $scope.availableScopes[0];
+
+            $scope.pdfView = function(url){
+                $scope.pdfUrl = url;
+                ngDialog.open({ templateUrl: 'partials/pdf.html' });
+            };
+
 
             //get dockets with search parameters
             $scope.searchDockets = function () {
