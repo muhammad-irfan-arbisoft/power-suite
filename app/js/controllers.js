@@ -6,6 +6,13 @@ var powersuiteControllers = angular.module('powersuiteControllers', []);
 
 powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'apiUrl', 'User', 'Dockets',
         function ($scope, $http, $filter, apiUrl, User, Dockets) {
+            $scope.moduleState = 'list';
+
+            $scope.showDetail = function(docket){
+                $scope.selectedDocket = docket;
+                $scope.moduleState = 'detail';
+                $scope.docketFilings = Dockets.getDocketFilings(docket);
+            };
 
             Date.prototype.getDateAsString = function () {
                 var yyyy = this.getFullYear().toString();
@@ -14,82 +21,13 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
                 return yyyy + '-' + (mm[1] ? mm : "0" + mm[0]) + '-' + (dd[1] ? dd : "0" + dd[0]);
             };
             $scope.results = null;
-            $scope.dockets = {
-                to_date: null,
-                from_date: null,
-                states: [],
-                keyword: null,
-                search_scope: [{name: null, code: null}]
-            };
-
-            $scope.availableStates = [
-                {name: 'Alabama', code: 'AL'},
-                {name: 'Alaska', code: 'AK'},
-                {name: 'Arizona', code: 'AZ'},
-                {name: 'Arkansas', code: 'AR'},
-                {name: 'California', code: 'CA'},
-                {name: 'Colorado', code: 'CO'},
-                {name: 'Connecticut', code: 'CT'},
-                {name: 'Delaware', code: 'DE'},
-                {name: 'Florida', code: 'FL'},
-                {name: 'Georgia', code: 'GA'},
-                {name: 'Hawaii', code: 'HI'},
-                {name: 'Idaho', code: 'ID'},
-                {name: 'Illinois', code: 'IL'},
-                {name: 'Indiana', code: 'IN'},
-                {name: 'Iowa', code: 'IA'},
-                {name: 'Kansas', code: 'KS'},
-                {name: 'Kentucky', code: 'KY'},
-                {name: 'Louisiana', code: 'LA'},
-                {name: 'Maine', code: 'ME'},
-                {name: 'Maryland', code: 'MD'},
-                {name: 'Massachusetts', code: 'MA'},
-                {name: 'Michigan', code: 'MI'},
-                {name: 'Minnesota', code: 'MN'},
-                {name: 'Mississippi', code: 'MS'},
-                {name: 'Missouri', code: 'MO'},
-                {name: 'Montana', code: 'MT'},
-                {name: 'Nebraska', code: 'NE'},
-                {name: 'Nevada', code: 'NV'},
-                {name: 'New Hampshire', code: 'NH'},
-                {name: 'New Jersey', code: 'NJ'},
-                {name: 'New Mexico', code: 'NM'},
-                {name: 'New York', code: 'NY'},
-                {name: 'North Carolina', code: 'NC'},
-                {name: 'North Dakota', code: 'ND'},
-                {name: 'Ohio', code: 'OH'},
-                {name: 'Oklahoma', code: 'OK'},
-                {name: 'Oregon', code: 'OR'},
-                {name: 'Pennsylvania', code: 'PA'},
-                {name: 'Rhode Island', code: 'RI'},
-                {name: 'South Carolina', code: 'SC'},
-                {name: 'South Dakota', code: 'SD'},
-                {name: 'Tennessee', code: 'TN'},
-                {name: 'Texas', code: 'TX'},
-                {name: 'Utah', code: 'UT'},
-                {name: 'Vermont', code: 'VT'},
-                {name: 'Virginia', code: 'VA'},
-                {name: 'Washington', code: 'WA'},
-                {name: 'West Virginia', code: 'WV'},
-                {name: 'Wisconsin', code: 'WI'},
-                {name: 'Wyoming', code: 'WY'}
-            ];
-
-            $scope.availableScopes = [
-                {name: 'All Content', code: 'all'},
-                {name: 'Metadata Only', code: 'meta-data'},
-                {name: 'Docket Number', code: 'state-id'},
-                {name: 'Major Parties', code: 'major-party'}
-            ];
-
+            $scope.dockets = Dockets.resetDocketsModel();
+            $scope.availableStates = Dockets.getStates();
+            $scope.availableScopes = Dockets.getScopes();
             //set priority by default to -
-            $scope.priorities = [
-                {name: 'Low'},
-                {name: 'High'},
-                {name: ' - '}
-            ];
+            $scope.availablePriorities = Dockets.getPriorities();
             //set default priority to -
-            $scope.priority = $scope.priorities[2];
+            $scope.priority = $scope.availablePriorities[2];
             $scope.dockets.search_scope = $scope.availableScopes[0];
 
             //get dockets with search parameters
@@ -122,6 +60,7 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
                     $scope.dockets.search_scope = $scope.availableScopes[0];
                     $scope.priority = null;
                     $scope.results = null;
+                    $scope.moduleState = 'list'
                 };
 
                 //$scope.dockets = Dockets.getDockets;

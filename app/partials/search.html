@@ -2,7 +2,7 @@
     <form novalidate class="form-inline">
         <div class="form-group">
             <label>States</label>
-            <ui-select style="min-width: 100px" multiple ng-model="dockets.states" theme="bootstrap" ng-disabled="disabled">
+            <ui-select style="min-width: 100px; max-width: 100px" multiple ng-model="dockets.states" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match placeholder="Select States...">{{$item.name}}</ui-select-match>
                 <ui-select-choices repeat="state in availableStates | filter:$select.search">
                     {{state.name}}
@@ -46,7 +46,8 @@
 
     <br/>
 
-    <div>
+    <div ng-switch="moduleState">
+        <div ng-switch-when="list">
         <table class=" table table-bordered table-striped table-responsive" ng-if="results">
             <tr>
                 <th><a href="" ng-click="reverse=!reverse;order('state_id', reverse)">Docket Number</a>
@@ -61,17 +62,52 @@
             </tr>
             <div>
                 <tr ng-repeat="docket in results">
-                    <td>{{docket.state_id}}</td>
+                    <td><a href="#/search" ng-click="showDetail(docket)">{{docket.state_id}}</a></td>
                     <td>{{docket.title}}</td>
                     <td>{{docket.state}}</td>
                     <td>{{docket.filing_count}}</td>
                     <td>{{docket.filed_on}}</td>
                     <td>{{docket.latest_filing_updated_on}}</td>
                     <td>{{docket.status}}</td>
-                    <td><select ng-model="priority" ng-options="priority.name for priority in priorities"></select></td>
+                    <td><select ng-model="priority" ng-options="priority.name for priority in availablePriorities"></select></td>
                 </tr>
             </div>
         </table>
+        </div>
+        <div ng-switch-when="detail">
+            <div class="container">
+                <table class="table-striped table table-bordered">
+                    <td>{{selectedDocket.state_id}}</td>
+                    <td>Status: {{selectedDocket.status}}</td>
+                    <td>Detailed Status: {{selectedDocket.status}}</td>
+                    <td>Updated: {{selectedDocket.updated_at}}</td>
+                    <td>Open: {{selectedDocket.filed_on}}</td>
+                    <td>{{selectedDocket.title}}</td>
+                    <td>Major Parties<div ng-repeat="party in selectedDocket.major_parties">{{party}}</div></td>
+                </table>
+                <div ng-if="docketFilings">
+                <table class="table-striped table table-bordered">
+                    <th><a href="">Date Filed</a></th>
+                    <th><a href="">Title</a></th>
+                    <th><a href="">Filing Parties</a></th>
+                    <th><a href="">Type</a></th>
+                    <th><a href=""># Document</a></th>
+                    <th><a href="">Total Pages</a></th>
+                    <th><a href="">PDF Preview</a></th>
+
+                    <tr ng-repeat="filing in docketFilings">
+                        <td>{{filing.filed_on}}</td>
+                        <td> - </td>
+                        <td>{{filing.types}}</td>
+                        <td>{{filing.documents.length}}</td>
+                        <td>{{filing.documents.page_count}}</td>
+                        <td>{{filing.documents.download_url}}</td>
+
+                    </tr>
+                </table>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
