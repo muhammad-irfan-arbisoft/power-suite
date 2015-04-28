@@ -4,8 +4,8 @@
 
 var powersuiteControllers = angular.module('powersuiteControllers', []);
 
-powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'apiUrl', 'User', 'Dockets', 'ngDialog',
-        function ($scope, $http, $filter, apiUrl, User, Dockets, ngDialog) {
+powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'apiUrl', 'User', 'Dockets', 'ngDialog', 'PDF',
+        function ($scope, $http, $filter, apiUrl, User, Dockets, ngDialog, PDF) {
             $scope.moduleState = 'list';
 
             $scope.showDetail = function(docket){
@@ -33,10 +33,13 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
             //set default priority to -
             $scope.priority = $scope.availablePriorities[2];
             $scope.dockets.search_scope = $scope.availableScopes[0];
+            //$scope.pdfUrl = PDF.getPDF('http://pucdocket.s3.amazonaws.com/VA/PUE-2010-00039/122913.pdf').then(function(pdf){
+            //    console.log(pdf);
+            //});
 
             $scope.pdfView = function(url){
-                $scope.pdfUrl = url;
-                ngDialog.open({ templateUrl: 'partials/pdf.html' });
+                //$scope.pdfUrl = 'http://pucdocket.s3.amazonaws.com/VA/PUE-2010-00039/122913.pdf';
+                //ngDialog.open({ templateUrl: 'partials/pdf.html', className: 'ngdialog-theme-default' });
             };
 
 

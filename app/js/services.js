@@ -16,6 +16,14 @@ powersuiteService.factory('User', function () {
     return user;
 });
 
+powersuiteService.service('PDF', function(){
+    this.getPDF = function(url){
+        PDFJS.getDocument(url, {headers: { 'Content-Type': 'application/pdf', 'Response-Type': 'arraybuffer'}}).success(function(pdf){
+            console.log(pdf);
+            return pdf;
+    })}
+});
+
 powersuiteService.service('Dockets', function ($http, apiUrl, docketsUrl, User) {
 
     this.getDockets = function(dockets){
