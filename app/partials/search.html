@@ -94,13 +94,13 @@
                 </table>
                 <div ng-if="docketFilings">
                     <table class="table-striped table table-bordered">
-                        <th><a href="">Date Filed</a></th>
-                        <th><a href="">Title</a></th>
-                        <th><a href="">Filing Parties</a></th>
+                        <th><a href="" ng-click="reverse=!reverse;order('filed_on', reverse)">Date Filed</a></th>
+                        <th><a href=""ng-click="reverse=!reverse;order('description', reverse)">Title</a></th>
+                        <th><a href="" >Filing Parties</a></th>
                         <th><a href="">Type</a></th>
-                        <th><a href=""># Document</a></th>
-                        <th><a href="">Total Pages</a></th>
-                        <th><a href="">PDF Preview</a></th>
+                        <th><a href="" ng-click="reverse=!reverse;order('length', reverse)"># Document</a></th>
+                        <th><a href="" ng-click="reverse=!reverse;order('total_pages', reverse)">Total Pages</a></th>
+                        <th><a href="" ng-click="reverse=!reverse;order('download_url', reverse)">PDF Preview</a></th>
 
                         <tr ng-repeat="filing in docketFilings">
                             <td>{{filing.filed_on}}</td>

@@ -14,6 +14,11 @@ powersuiteControllers.controller('SearchCtrl', ['$scope', '$http', '$filter', 'a
                 Dockets.getDocketFilings(docket).then(function (response) {
                     $scope.docketFilings = response.data.dockets[0].filings;
                     $scope.docket = response.data.dockets[0];
+
+                    var orderBy = $filter('orderBy');
+                    $scope.order = function (predicate, reverse) {
+                        $scope.docketFilings = orderBy($scope.docketFilings, predicate, reverse);
+                    };
                     console.log($scope.docketFilings);
                 });
             };
