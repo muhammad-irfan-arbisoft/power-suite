@@ -53,8 +53,8 @@
         <div ng-switch-when="list">
             <table class=" table table-bordered table-striped table-responsive" ng-if="results">
                 <tr>
-                    <th><a href="" ng-click="reverse=!reverse;order('state_id', reverse)">Docket Number</a>
-                    <th><a href="" ng-click="reverse=!reverse;order('title', reverse)">Title</a></th>
+                    <th class="col-md-2"><a href="" ng-click="reverse=!reverse;order('state_id', reverse)">Docket Number</a>
+                    <th class="col-lg-5"><a href="" ng-click="reverse=!reverse;order('title', reverse)">Title</a></th>
                     <th><a href="" ng-click="reverse=!reverse;order('state', reverse)">State</a></th>
                     <th><a href="" ng-click="reverse=!reverse;order('filing_count', reverse)">Filing</a></th>
                     <th><a href="" ng-click="reverse=!reverse;order('filed_on', reverse)">Date Opened</a></th>
@@ -81,26 +81,25 @@
         </div>
         <div ng-switch-when="detail">
             <div class="container">
-                <table class="table-striped table table-bordered">
-                    <td>{{selectedDocket.state_id}}</td>
-                    <td>Status: {{selectedDocket.status}}</td>
-                    <td>Detailed Status: {{selectedDocket.status}}</td>
-                    <td>Updated: {{selectedDocket.updated_at}}</td>
-                    <td>Open: {{selectedDocket.filed_on}}</td>
-                    <td>{{selectedDocket.title}}</td>
-                    <td>Major Parties
-                        <div ng-repeat="party in selectedDocket.major_parties">{{party}}</div>
-                    </td>
-                </table>
+                    <p><strong>PDC:</strong>{{selectedDocket.state_id}}</p>
+                    <p><strong>Status:</strong> {{selectedDocket.status}}</p>
+                    <p><strong>Detailed Status:</strong> {{selectedDocket.status}}</p>
+                    <p><strong>Updated:</strong> {{selectedDocket.updated_at}}</p>
+                    <p><strong>Open:</strong> {{selectedDocket.filed_on}}</p>
+                    <p>{{selectedDocket.title}}</p>
+                    <p><strong>Major Parties:</strong>
+                   <div ng-repeat="party in selectedDocket.major_parties">{{party}}</div>
+                      {{party}}</p>
+
                 <div ng-if="docketFilings">
                     <table class="table-striped table table-bordered">
-                        <th><a href="" ng-click="reverse=!reverse;order('filed_on', reverse)">Date Filed</a></th>
+                        <th class="col-md-1"><a href="" ng-click="reverse=!reverse;order('filed_on', reverse)">Date Filed</a></th>
                         <th><a href=""ng-click="reverse=!reverse;order('description', reverse)">Title</a></th>
-                        <th><a href="" >Filing Parties</a></th>
+                        <th class="col-md-2"><a href="" >Filing Parties</a></th>
                         <th><a href="">Type</a></th>
-                        <th><a href=""># Document</a></th>
-                        <th><a href="">Total Pages</a></th>
-                        <th><a href="">PDF Preview</a></th>
+                        <th class="col-md-2"><a href=""># Document</a></th>
+                        <th class="col-md-2"><a href="">Total Pages</a></th>
+                        <th class="col-md-1"><a href="">PDF Preview</a></th>
 
                         <tr ng-repeat="filing in docketFilings">
                             <td>{{filing.filed_on}}</td>
@@ -109,7 +108,6 @@
                             <td>-</td>
                             <td>{{filing.documents.length}}</td>
                             <td>{{filing.total_pages}}</td>
-                            <td>{{filing.documents[0].download_url}}</td>
                             <td><a class="btn btn-mini" href="" ng-click="pdfView(filing.documents[0].download_url)"><i class="glyphicon-eye-open"></i></a></td>
                         </tr>
                     </table>
