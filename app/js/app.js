@@ -15,22 +15,6 @@ var powersuiteApp = angular.module('powersuite', [
     'pdf',
     'ngDialog'
 ]);
-//
-//powersuiteApp.config(['$routeProvider',
-//  function($routeProvider) {
-//    $routeProvider.
-//      when('/search', {
-//        templateUrl: 'partials/search.html',
-//        controller: 'SearchCtrl'
-//      }).
-//      when('/favorites', {
-//        templateUrl: 'partials/favourites.html',
-//        controller: 'FavouritesCtrl'
-//      }).
-//      otherwise({
-//        templateUrl: 'partials/home.html'
-//      });
-//  }]);
 
 powersuiteApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $stateProvider
