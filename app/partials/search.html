@@ -62,7 +62,7 @@
                         Filing</a>
                     </th>
                     <th><a href="" ng-click="reverse=!reverse;order('status', reverse)">Status</a></th>
-                    <th><a href="" ng-click="reverse=!reverse;order('priority', reverse)">Priority</a></th>
+                    <th><a href="">Priority</a></th>
                 </tr>
                 <div>
                     <tr ng-repeat="docket in results">
@@ -98,21 +98,19 @@
                         <th><a href=""ng-click="reverse=!reverse;order('description', reverse)">Title</a></th>
                         <th><a href="" >Filing Parties</a></th>
                         <th><a href="">Type</a></th>
-                        <th><a href="" ng-click="reverse=!reverse;order('length', reverse)"># Document</a></th>
-                        <th><a href="" ng-click="reverse=!reverse;order('total_pages', reverse)">Total Pages</a></th>
-                        <th><a href="" ng-click="reverse=!reverse;order('download_url', reverse)">PDF Preview</a></th>
+                        <th><a href=""># Document</a></th>
+                        <th><a href="">Total Pages</a></th>
+                        <th><a href="">PDF Preview</a></th>
 
                         <tr ng-repeat="filing in docketFilings">
                             <td>{{filing.filed_on}}</td>
-                            <td> {{filing.description}}</td>
-                            <td> -</td>
+                            <td>{{filing.description}}</td>
+                            <td>-</td>
                             <td>-</td>
                             <td>{{filing.documents.length}}</td>
                             <td>{{filing.total_pages}}</td>
                             <td>{{filing.documents[0].download_url}}</td>
-
                             <td><a class="btn btn-mini" href="" ng-click="pdfView(filing.documents[0].download_url)"><i class="glyphicon-eye-open"></i></a></td>
-
                         </tr>
                     </table>
                 </div>
